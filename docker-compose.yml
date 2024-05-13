@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   backend:
     build:
@@ -8,14 +9,27 @@ services:
       - ./Backend/src:/usr/src/app/src  
     ports:
       - "3001:3001"
+    depends_on:
+      - db
 
   frontend:
     build:
       context: ./Frontend 
       dockerfile: Dockerfile
     ports:
-      - "80:80" 
+      - "3000:3000" 
     volumes:
       - ./Frontend:/app 
     depends_on:
-      - backend 
+      - backend
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: react_express
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
