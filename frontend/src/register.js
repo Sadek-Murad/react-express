@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
-function Register({ onRegister }) {
+function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const history = useHistory(); // Hook für die Navigation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +16,8 @@ function Register({ onRegister }) {
     try {
       const response = await axios.post('http://localhost:3001/register', { username, password });
       if (response.status === 200) {
-        onRegister();
+       
+        history.push('/');
       } else {
         setError('Registrierung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben und versuchen Sie es erneut.');
       }
