@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory(); // Hook für die Navigation
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,7 +13,7 @@ function Login() {
       const response = await axios.post('http://localhost:3001/login', { username, password });
       if (response.status === 200) {
         
-        history.push('/');
+        navigate('/');
       } else {
         alert('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Anmeldeinformationen.');
       }
